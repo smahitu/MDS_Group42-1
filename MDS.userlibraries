@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<eclipse-userlibraries>
+  <library name="jdom-2.0.5">
+    <archive path="D:/itu/MDS/lib/jdom-2.0.5.jar" />
+  </library>
+</eclipse-userlibraries>
+
