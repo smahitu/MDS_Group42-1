@@ -102,4 +102,30 @@ public class TasksJDOMParser {
         return attendants;
     }
 
+    public static List<String> getTaskDates(InputStream inputStream) throws JDOMException, IOException {
+        SAXBuilder builder = new SAXBuilder();
+
+        Document doc;
+        try {
+            doc = builder.build(inputStream);
+        } catch (IOException ex) {
+            Logger.getLogger(TasksJDOMParser.class.getName()).log(Level.SEVERE, null, ex);
+            throw ex;
+        }
+
+        XPathFactory xpfac = XPathFactory.instance();
+        XPathExpression<Element> xp = xpfac.compile("//task", new ElementFilter());
+
+        List<Element> tasks = xp.evaluate(doc);
+
+        List<String> dates = new ArrayList<>();
+        for (Element task : tasks) {
+            String date = task.getAttribute("date").getValue();
+            dates.add(date);
+        }
+
+        return dates;
+    }
+
+
 }
