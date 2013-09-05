@@ -76,4 +76,30 @@ public class TasksJDOMParser {
 
         return ids;
     }
+    
+    public static List<String> getUsers(InputStream inputStream) throws JDOMException, IOException {
+        SAXBuilder builder = new SAXBuilder();
+
+        Document doc;
+        try {
+            doc = builder.build(inputStream);
+        } catch (IOException ex) {
+            Logger.getLogger(TasksJDOMParser.class.getName()).log(Level.SEVERE, null, ex);
+            throw ex;
+        }
+
+        XPathFactory xpfac = XPathFactory.instance();
+        XPathExpression<Element> xp = xpfac.compile("//attendants", new ElementFilter());
+
+        List<Element> users = xp.evaluate(doc);
+
+        List<String> attendants = new ArrayList<>();
+        for (Element user : users) {
+            String attendant = user.getText();
+            attendants.add(attendant);
+        }
+
+        return attendants;
+    }
+
 }
