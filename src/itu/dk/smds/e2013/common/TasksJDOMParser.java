@@ -14,6 +14,7 @@ import org.jdom2.xpath.XPathFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -23,7 +24,7 @@ import java.util.logging.Logger;
  */
 public class TasksJDOMParser {
 
-    public static Document GetTasksByQuery(InputStream stream, String query) throws JDOMException, IOException {
+    public static Document getTasksByQuery(InputStream stream, String query) throws JDOMException, IOException {
         SAXBuilder builder = new SAXBuilder();
 
         //String query = "//task[contains(attendant/@ids,'" + userId + "')]";
@@ -49,5 +50,30 @@ public class TasksJDOMParser {
         xmlDoc.addContent(root);
 
         return xmlDoc;
+    }
+
+    public static List<String> getTaskIds(InputStream inputStream) throws JDOMException, IOException {
+        SAXBuilder builder = new SAXBuilder();
+
+        Document doc;
+        try {
+            doc = builder.build(inputStream);
+        } catch (IOException ex) {
+            Logger.getLogger(TasksJDOMParser.class.getName()).log(Level.SEVERE, null, ex);
+            throw ex;
+        }
+
+        XPathFactory xpfac = XPathFactory.instance();
+        XPathExpression<Element> xp = xpfac.compile("//task", new ElementFilter());
+
+        List<Element> tasks = xp.evaluate(doc);
+
+        List<String> ids = new ArrayList<>();
+        for (Element task : tasks) {
+            String id = task.getAttribute("id").getValue();
+            ids.add(id);
+        }
+
+        return ids;
     }
 }

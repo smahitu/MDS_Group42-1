@@ -41,7 +41,7 @@ public class GetTasksByIdServlet extends HttpServlet {
 
             String query = "//task[@id='"+request.getQueryString()+"']";
             
-            Document tasksDoc = TasksJDOMParser.GetTasksByQuery(xmlStream, query);
+            Document tasksDoc = TasksJDOMParser.getTasksByQuery(xmlStream, query);
 
             response.setContentType("text/Xml;charset=UTF-8");
 
