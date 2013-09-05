@@ -70,7 +70,7 @@ public class TasksJDOMParser {
 
         List<String> ids = new ArrayList<>();
         for (Element task : tasks) {
-            String id = task.getAttribute("id").toString();
+            String id = task.getAttribute("id").getValue();
             ids.add(id);
         }
 
