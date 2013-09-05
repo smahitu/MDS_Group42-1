@@ -37,7 +37,7 @@ public class GetAllTasksServlet extends HttpServlet {
         try {
             InputStream xmlStream = getServletContext().getResourceAsStream("/WEB-INF/task-manager-xml.xml");
             String query = "//task";
-            Document tasksDoc = TasksJDOMParser.GetTasksByQuery(xmlStream, query);
+            Document tasksDoc = TasksJDOMParser.getTasksByQuery(xmlStream, query);
             response.setContentType("text/Xml;charset=UTF-8");
 
             PrintWriter out = response.getWriter();
